@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  name: nodejs-deploy 
+  labels:    
+    app: 1standalonedevopsclass
+spec:  
+  replicas: 2 
+  selector:    
+    matchLabels:
+      app: 1standalonedevopsclass
+  template:
+    metadata:
+      labels:
+        app: 1standalonedevopsclass
+    spec: 
+     containers:
+      - name: 1standalonedevopsclass
+        image: autoking777/node-web-app:3
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-svc
+  labels:
+    app: 1standalonedevopsclass
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 32161
+  selector:
+    app: 1standalonedevopsclass
+
